@@ -15,7 +15,7 @@ PRIMARY KEY (username)
 );
 
 CREATE TABLE races(
-race_id MEDIUMINT AUTO_INCREMENT,
+race_id INT(3) AUTO_INCREMENT,
 category VARCHAR(15),
 name VARCHAR(15),
 race_date DATE,
@@ -29,7 +29,7 @@ category VARCHAR(15)
 
 CREATE TABLE racer_participation(
 racer_name VARCHAR(15),
-race_name VARCHAR(15),
+race_name INT(3),
 FOREIGN KEY (race_name) 
         REFERENCES races (race_id),
 FOREIGN KEY (racer_name) 
@@ -38,9 +38,9 @@ FOREIGN KEY (racer_name)
 
 CREATE TABLE organizer_participation(
 organizer_name VARCHAR(15),
-race_name VARCHAR(15),
+race_name INT(3),
 FOREIGN KEY (race_name) 
-        REFERENCES races(name),
+        REFERENCES races(race_id),
 FOREIGN KEY (organizer_name) 
         REFERENCES organizer_account(username)
 );

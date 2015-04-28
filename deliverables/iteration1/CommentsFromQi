@@ -1,0 +1,6 @@
+March 3
+1. Make sure SSD files are saved as some common formats so I can open and check them, and also SSD diagrams should follow UML notations.
+2. Necessary comments and "readme" files should be added to explain your project. 
+3. Implementations are different from your design documents. In the design documents, you memtioned "users" and "data base" 
+while in the implementation I only saw "register", or "login" or "DbConnection". Think about how to match them. 
+How to describe your implementation using UML diagram.

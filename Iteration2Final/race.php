@@ -1,5 +1,31 @@
 <!DOCTYPE html> 
 <html>
+<?php
+require 'DbConnect.php';
+session_start();
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+	require ('login_functions.inc.php');
+	$username=$mysqli->real_escape_string(trim($_POST['username']));
+	$raceid=$mysqli->real_escape_string(trim($_POST['raceid']));
+	$q = "insert into racer_participation (racer_name, race_name) values ('$username', '$raceid')";
+		echo '<script type="text/javascript">';
+		echo 'window.alert("'. $q .'")';
+		echo '</script>';
+	$mysqli->query($q);	
+	if ($mysqli->affected_rows == 1) {
+		redirect_user('races.php');
+		echo '<script type="text/javascript">';
+		echo 'window.alert("successful insertion")';
+		echo '</script>';
+	}
+	else{
+		echo '<script type="text/javascript">';
+		echo 'window.alert("failure insertion")';
+		echo '</script>';
+	}
+}
+?>
+
 <head>
   <title>The Running Project</title>
   <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -19,11 +45,11 @@
 	  <nav>
 	    <div id="menubar">
           <ul id="nav">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="ourwork.html">Our Work</a></li>
-            <li><a href="testimonials.html">Testimonials</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li class="current"><a href="contact.html">Register</a></li>
+            <li><a href="home.php">Home</a></li>
+            <li><a href="createRace.php">Create Race</a></li>
+            <li><a href="account.php">Account</a></li>
+            <li class="current"><a href="races.php">Races</a></li>
+            <li><a href="register.php"><?php if(isset($_COOKIE['username'])){echo "Log Out";} else{echo "Register";}?></a></li>
           </ul>
         </div><!--close menubar-->	
       </nav>
@@ -44,20 +70,20 @@
 		<div class="sidebar">
           <div class="sidebar_item">
             <h2>The Running Project</h2>
-            <p>The community for local racing.</p>
+            <p>This is the best.</p>
           </div><!--close sidebar_item--> 
         </div><!--close sidebar-->     		
 		<div class="sidebar">
           <div class="sidebar_item">
             <h2>Header...</h2>
             <h3>5k of the Week</h3>
-            <p>WELL, WE NEED SOME DATA! SILLY!!</p>         
+            <p>What a good website!</p>         
 		  </div><!--close sidebar_item--> 
         </div><!--close sidebar-->
 		<div class="sidebar">
           <div class="sidebar_item">
             <h3>5k of the Month</h3>
-            <p>WELL, WE NEED SOME DATA! SILLY!!</p>         
+            <p>Very well designed</p>         
 		  </div><!--close sidebar_item--> 
         </div><!--close sidebar-->  		
         <div class="sidebar">
@@ -72,33 +98,35 @@
 	  <div id="content">
         <div class="content_item">
 		  <div class="form_settings">
-            <h2>Registration</h2>
-			  <form action="register.php" method="post">
-				<table border="0">
-				  <tr>
-					<td>First Name</td>
-					 <td><input type="text" name="fName" maxlength="15" size="30"></td>
-				  </tr>
-				  <tr>
-					<td>Last Name</td>
-					<td> <input type="text" name="lName" maxlength="15" size="30"></td>
-				  </tr>
-				  <tr>
-					<td>Age</td>
-					<td> <input type="number" name="age" maxlength="2" size="5"></td>
-				  </tr>
-				  <tr>
-					<td>Sex</td>
-					<td><select name="sex" size="1">
-						<option value="M">Male</option>
-						<option value="F">Female</option>
-						</select></td>
-				  </tr>
-				  <tr>
-					<td colspan="2"><input type="submit" value="Register"></td>
-				  </tr>
-				</table>
-			  </form>
+            <h2>Races</h2>
+			<?php
+			if (isset($_GET['race_id'])){ // From races.php
+				$raceid = $_GET['race_id'];
+			}
+			$q = 'SELECT * FROM races WHERE race_id = ' . $raceid;
+			$r = $mysqli->query ($q); // Run the query.
+			$row = $r->fetch_object();
+			echo 'NAME: ' . $row->name . '<br>';
+			echo 'CATEGORY: ' . $row->category . '<br>';
+			echo 'DATE: ' . $row->race_date . '<br>';
+			echo 'TIME: ' . $row->race_time . '<br>';
+			
+			echo '<form action="race.php" method="post">';
+			echo '<input type="hidden" name="raceid" value="' . $raceid . '"/>';
+			echo '<input type="hidden" name="username" value="' . $_COOKIE['username'] . '"/>';
+			echo '<input type="submit" value="Register">';
+			
+			echo '<h2>Racers</h2>';
+			$q = 'SELECT * FROM racer_participation WHERE race_name=' . $raceid;
+			$r = $mysqli->query ($q); // Run the query.
+			$num = $r->num_rows;
+			if($num > 0){
+				while ($row = $r->fetch_object()) {
+						echo $row->racer_name .' <br> ';
+				}
+			}
+			?>
+			</form>
 			</div><!--close form_settings-->
 		</div><!--close content_item-->
       </div><!--close content-->   
@@ -115,54 +143,3 @@
   
 </body>
 </html>
-
-<?php
-require 'DbConnect.php';
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  // create short variable names
-  $fName=$mysqli->real_escape_string(trim($_POST['fName']));
-  $lName=$mysqli->real_escape_string(trim($_POST['lName']));
-  $age=$mysqli->real_escape_string(trim($_POST['age']));
-  $sex=$mysqli->real_escape_string(trim($_POST['sex']));
-
-  if (!$fName || !$lName || !$age || !$sex) {
-     echo "You have not entered all the required details.<br />"
-          ."Please go back and try again.";
-     exit;
-  }
-  if(!isset($_POST['fName'])){
-  echo "You have not entered the fName.<br />"
-          ."Please go back and try again.";
-     exit;
-  }
-  if(!isset($_POST['lName'])){
-  echo "You have not entered the lName.<br />"
-          ."Please go back and try again.";
-     exit;
-  }
-  if(!isset($_POST['age'])){
-  echo "You have not entered the age.<br />"
-          ."Please go back and try again.";
-     exit;
-  }
-  if(!isset($_POST['sex'])){
-  echo "You have not entered the sex.<br />"
-          ."Please go back and try again.";
-     exit;
-  }
-  
-  
-  $q = "insert into sample_alpha_user (fName, lName, age, sex) values ('$fName', '$lName', '$age', '$sex')";
-  $mysqli->query($q);	
- if ($mysqli->affected_rows == 1) {
- //success...
- } else {
- echo '<h1>System Error</h1>';
- // Debugging message:
-echo '<p>' . $mysqli->error . '<br /><br />Query: ' . $q . '</p>';
-}
-
-  $mysqli->close(); // Close the database connection.
-  }
-?>
-

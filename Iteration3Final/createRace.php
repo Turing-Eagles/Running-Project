@@ -108,14 +108,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             <h3>Create Race</h3>
             <p>Only you can prevent forest fires.</p>         
 		  </div><!--close sidebar_item--> 
-        </div><!--close sidebar-->  		
-        <div class="sidebar">
-          <div class="sidebar_item">
-            <h2>Contact</h2>
-            <p>Phone: +44 (0)1234 567891</p>
-            <p>Email: <a href="mailto:info@youremail.co.uk">yo momma</a></p>
-          </div><!--close sidebar_item--> 
-        </div><!--close sidebar-->
+        </div><!--close sidebar-->  	
        </div><!--close sidebar_container-->
 	
 	  <div id="content">

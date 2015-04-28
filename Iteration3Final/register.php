@@ -20,46 +20,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $day=$mysqli->real_escape_string(trim($_POST['day']));
   $month=$mysqli->real_escape_string(trim($_POST['month']));
 
-  if (!$fName || !$lName || !$uName || !$sex || !$password) {
-     echo "You have not entered all the required details.<br />"
-          ."Please go back and try again.";
-     exit;
-  }
-  if(!isset($_POST['fName'])){
-  echo "You have not entered the fName.<br />"
-          ."Please go back and try again.";
-     exit;
-  }
-  if(!isset($_POST['lName'])){
-  echo "You have not entered the lName.<br />"
-          ."Please go back and try again.";
-     exit;
-  }
-  if(!isset($_POST['uName'])){
-  echo "You have not entered the Username.<br />"
-          ."Please go back and try again.";
-     exit;
-  }
-  if(!isset($_POST['sex'])){
-  echo "You have not entered the sex.<br />"
-          ."Please go back and try again.";
-     exit;
-  }
-  if(!isset($_POST['password'])){
-  echo "You have not entered the password.<br />"
-          ."Please go back and try again.";
-     exit;
+  if (!isset($fName) || !isset($lName) || !isset($uName) || !isset($sex) || !isset($_POST['password'])) {
+	echo '<script type="text/javascript">';
+	echo 'window.alert("You have not entered in all of the required details. Please try again.")';
+	echo '</script>';
+    exit;
   }
   if($password != $password2){
-  echo "Passwords do not match.<br />"
-          ."Please go back and try again.";
-     exit;
+	echo '<script type="text/javascript">';
+	echo 'window.alert("Passwords do not match. Please try again.")';
+	echo '</script>';
+    exit;
   }
   
   if(strlen($_POST['password']) < 7){
-  echo "Password must be at least 7 characters.<br />"
-          ."Please go back and try again.";
-     exit;
+	echo '<script type="text/javascript">';
+	echo 'window.alert("Password must be at least 7 characters.")';
+	echo '</script>';
+    exit;
   }
   
   $birthString = $month . '/' . $day . '/' . $year;
@@ -122,8 +100,8 @@ else if($_SERVER['REQUEST_METHOD'] == 'GET'){
     <div id="slideshow_container">  
 	  <div class="slideshow">
 	    <ul class="slideshow">
-          <li class="show"><img width="940" height="250" src="images/home_1.jpg" alt="&quot;Become a hippy&quot;" /></li>
-          <li><img width="940" height="250" src="images/home_2.jpg" alt="&quot;Live on the railroads&quot;" /></li>
+          <li class="show"><img width="940" height="250" src="images/home_1.jpg" alt="&quot;&quot;" /></li>
+          <li><img width="940" height="250" src="images/home_2.jpg" alt="&quot;&quot;" /></li>
         </ul> 
 	  </div><!--close slideshow-->  	
 	</div><!--close slideshow_container-->  	
@@ -139,23 +117,9 @@ else if($_SERVER['REQUEST_METHOD'] == 'GET'){
         </div><!--close sidebar-->     		
 		<div class="sidebar">
           <div class="sidebar_item">
-            <h2></h2>
             <h3>Account</h3>
             <p>This is the page where you can either create an account or log in to your existing account.</p>         
 		  </div><!--close sidebar_item--> 
-        </div><!--close sidebar-->
-		<div class="sidebar">
-          <div class="sidebar_item">
-            <h3>Life</h3>
-            <p>What is life evn</p>         
-		  </div><!--close sidebar_item--> 
-        </div><!--close sidebar-->  		
-        <div class="sidebar">
-          <div class="sidebar_item">
-            <h2>Contact</h2>
-            <p>Phone: +44 (0)1234 567891</p>
-            <p>Email: <a href="mailto:info@youremail.co.uk">my email address</a></p>
-          </div><!--close sidebar_item--> 
         </div><!--close sidebar-->
        </div><!--close sidebar_container-->
 	

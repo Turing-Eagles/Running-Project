@@ -107,14 +107,7 @@ else{
             <h3>Race Results</h3>
             <p>You can fill in the details for the race results in the next tab over.</p>         
 		  </div><!--close sidebar_item--> 
-        </div><!--close sidebar-->  		
-        <div class="sidebar">
-          <div class="sidebar_item">
-            <h2>Contact</h2>
-            <p>Phone: +44 (0)1234 567891</p>
-            <p>Email: <a href="mailto:info@youremail.co.uk">my email address</a></p>
-          </div><!--close sidebar_item--> 
-        </div><!--close sidebar-->
+        </div><!--close sidebar-->  	
        </div><!--close sidebar_container-->
 	
 	  <div id="content">

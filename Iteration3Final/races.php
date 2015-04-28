@@ -98,14 +98,7 @@ else{
             <h3>Account</h3>
             <p>An account is required in order to register for a race. If you don't see a link to register, try clicking on the register tab at the top right.</p>         
 		  </div><!--close sidebar_item--> 
-        </div><!--close sidebar-->  		
-        <div class="sidebar">
-          <div class="sidebar_item">
-            <h2>Contact</h2>
-            <p>Phone: +44 (0)1234 567891</p>
-            <p>Email: <a href="mailto:info@youremail.co.uk">my email address</a></p>
-          </div><!--close sidebar_item--> 
-        </div><!--close sidebar-->
+        </div><!--close sidebar-->  	
        </div><!--close sidebar_container-->
 	
 	  <div id="content">

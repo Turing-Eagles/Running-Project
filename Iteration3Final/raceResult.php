@@ -4,9 +4,6 @@
 require 'DbConnect.php';
 session_start();
 require ('login_functions.inc.php');
-if($_SERVER['REQUEST_METHOD'] == 'GET'){
-	$raceName = ($_GET["race_name"]);
-}
 ?>
 
 <head>
@@ -67,25 +64,56 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
             <h3>Race Results</h3>
             <p>As usual, only the organizer of a race can edit their own race results.</p>         
 		  </div><!--close sidebar_item--> 
-        </div><!--close sidebar-->  		
-        <div class="sidebar">
-          <div class="sidebar_item">
-            <h2>Contact</h2>
-            <p>Phone: +44 (0)1234 567891</p>
-            <p>Email: <a href="mailto:info@youremail.co.uk">my email address</a></p>
-          </div><!--close sidebar_item--> 
-        </div><!--close sidebar-->
+        </div><!--close sidebar-->  	
        </div><!--close sidebar_container-->
 	
 	  <div id="content">
         <div class="content_item">
 		  <div class="form_settings">
+		    <h2>Search Criteria</h2>
+		    <form action="raceResult.php" method="GET">
+				First Name <input name="searchFName" type="text"/><br>
+				Last Name <input name="searchLName" type="text"/><br>
+				Sex <select name="searchSex"><option selected></option><option>M</option><option>F</option></select><br>
+				<input type="hidden" value="<?php echo $_GET['race_name']?>" name="race_name"/><br>
+				Sort By <select name="sortBy"><option value="finishing_place">Finishing Place</option><option value="Sex">Sex</option><option value="birthdate">Birth Date</option></select><br>
+				<input type="submit" value="Search"/>
+			</form>
             <h2>Race Results</h2>
 				<table border="1" align="center" cellspacing="3" cellpadding="3" width="75%">
 				<th>Name</th><th>Time</th><th>Place</th><th>Sex</th><th>Age At Race</th>
 					<?php
 					$raceName = ($_GET["race_name"]);
+					$fName;
+					$lName;
+					$sex;
+					$orderBy;
+					if(isset($_GET['searchFName'])){
+						$fName = $_GET['searchFName'];
+					}
+					if(isset($_GET['sortBy'])){
+						$orderBy = $_GET['sortBy'];
+					}
+					else{
+						$orderBy = "finishing_place";
+					}
+					if(isset($_GET['searchLName'])){
+						$lName = $_GET['searchLName'];
+					}
+					if(isset($_GET['searchSex'])){
+						$sex = $_GET['searchSex'];
+					}
 					$q = "SELECT * FROM racer_participation INNER JOIN racer_account ON username = racer_name INNER JOIN races ON race_id = race_name WHERE race_name = '$raceName'";
+					if(isset($_GET['searchFName']) && $_GET['searchFName'] != ''){
+						$q = $q . " AND first_name = '$fName'";
+					}
+					if(isset($_GET['searchLName']) && $_GET['searchLName'] != ''){
+						$q = $q . " AND last_name = '$lName'";
+					}
+					if(isset($_GET['searchSex']) && $_GET['searchSex'] != ''){
+						$q = $q . " AND sex = '$sex'";
+					}
+					$q = $q . " " .	"ORDER BY " .  $orderBy;
 					$r = $mysqli->query ($q); // Run the query.
 					while($row = $r->fetch_object()){
 						echo '<tr>';

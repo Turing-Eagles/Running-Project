@@ -95,14 +95,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             <h3>Race Results</h3>
             <p>As usual, only the organizer of a race can edit their own race results.</p>         
 		  </div><!--close sidebar_item--> 
-        </div><!--close sidebar-->  		
-        <div class="sidebar">
-          <div class="sidebar_item">
-            <h2>Contact</h2>
-            <p>Phone: +44 (0)1234 567891</p>
-            <p>Email: <a href="mailto:info@youremail.co.uk">my email address</a></p>
-          </div><!--close sidebar_item--> 
-        </div><!--close sidebar-->
+        </div><!--close sidebar-->  	
        </div><!--close sidebar_container-->
 	
 	  <div id="content">
